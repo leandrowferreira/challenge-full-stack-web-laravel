@@ -1,9 +1,9 @@
 GrupoA Educação - Full Stack Web Developer - Laravel
 ===================
 
-[![N|Solid](https://www.grupoa.com.br/hs-fs/hubfs/logo-grupoa.png?width=300&name=logo-grupoa.png)](https://www.grupoa.com.br) 
+[![N|Solid](https://www.grupoa.com.br/hs-fs/hubfs/logo-grupoa.png?width=300&name=logo-grupoa.png)](https://www.grupoa.com.br)
 
-O objetivo deste desafio é avaliar as competências técnicas dos candidatos a desenvolvedor Full Stack Web na Maior Plataforma de Educação do Brasil, **Grupo A Educação**. 
+O objetivo deste desafio é avaliar as competências técnicas dos candidatos a desenvolvedor Full Stack Web na Maior Plataforma de Educação do Brasil, **Grupo A Educação**.
 
 Será solicitado o desenvolvimento de uma Aplicação que realize a Matrícula do Aluno na Turma de Programação Web da instituição EdTech. Regras e requisitos técnicos estão detalhadas neste documento.
 
@@ -25,17 +25,17 @@ O desafio consiste em criar uma aplicação para o cadastro de usuários conform
 Abaixo alguns mockoups de interface como um guia para a criação do front-end. Fique à vontade para usar sua criatividade e melhorias na criação do front-end.
 
 * Listagem de Alunos
-![Listagem de Alunos](/mockups/studants_list.png)
+![Listagem de Alunos](/project-specification/mockups/studants_list.png)
 
 * Criar/Editar Aluno
-![Listagem de Alunos](/mockups/studants_save.png)
+![Listagem de Alunos](/project-specification/mockups/studants_save.png)
 
 ## Histórias do Usuário
 - **Sendo** um usuário administrativo da Instituição
 - **Quero** gerenciar cadastros de alunos
 - **Para** que eu possa realizar a matrícula do aluno
 
-### Critérios de aceite: 
+### Critérios de aceite:
 
 #### Cenário: cadastrar novo aluno
 - **Dado** que estou na tela de Consulta de Alunos
@@ -51,12 +51,12 @@ Abaixo alguns mockoups de interface como um guia para a criação do front-end. 
 - **Dado** que inseri dados válidos nos campos
 - **Quando** clico em Cancelar
 - **Então** retorna para tela Consulta de Alunos
-- **E** não persiste a gravação dos dados no banco 
+- **E** não persiste a gravação dos dados no banco
 
-#### Cenário: listar alunos cadastrados 
+#### Cenário: listar alunos cadastrados
 - **Dado** que estou no Módulo Acadêmico
 - **Quando** clico no menu Alunos
-- **Então** abre a tela de Consulta de Alunos 
+- **Então** abre a tela de Consulta de Alunos
 - **E** exibe opção Cadastrar Aluno ao topo
 - **E** lista dados dos alunos cadastrados
 - **E** exibe opção Editar por aluno
@@ -65,7 +65,7 @@ Abaixo alguns mockoups de interface como um guia para a criação do front-end. 
 #### Cenário editar cadastro de aluno
 - **Dado** que estou na listagem de alunos
 - **Quando** clico em Editar aluno
-- **Então** abre a tela de Cadastro do Aluno 
+- **Então** abre a tela de Cadastro do Aluno
 - **E** exibe os campos do cadastro preenchidos
 - **E** habilita alteração dos campos editáveis
 ####
@@ -83,7 +83,7 @@ Abaixo alguns mockoups de interface como um guia para a criação do front-end. 
 - **Quando** clico em Excluir aluno
 - **Então** exibe a modal de confirmação de exclusão
 ####
-- **Dado** que estou na modal de confirmação de exclusão 
+- **Dado** que estou na modal de confirmação de exclusão
 - **Quando** clico em Confirmar
 - **Então** então exclui o registro do aluno
 ####
