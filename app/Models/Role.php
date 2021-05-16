@@ -9,6 +9,16 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $table    = 'roles';
-    protected $fillable = ['name', 'description', 'abilities'];
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'roles';
+
+    /**
+     * Fields that can be directly assigned.
+     *
+     * @var array
+     */    protected $fillable = ['name', 'description', 'abilities'];
 }

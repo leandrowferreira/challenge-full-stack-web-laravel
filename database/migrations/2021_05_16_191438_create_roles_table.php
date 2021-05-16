@@ -31,8 +31,10 @@ class CreateRolesTable extends Migration
         });
 
         //Laravel does not provide default methods to add table comments
-        $table = env('DB_PREFIX') . 'roles';
-        DB::statement("ALTER TABLE {$table} comment 'The roles applied to institution\'s users'");
+        if (DB::connection()->getDriverName() != 'sqlite') {
+            $table = env('DB_PREFIX') . 'roles';
+            DB::statement("ALTER TABLE {$table} comment 'The roles applied to institution\'s users'");
+        }
     }
 
     /**

@@ -46,8 +46,10 @@ class CreateUsersTable extends Migration
         });
 
         //Laravel does not provide default methods to add table comments
-        $table = env('DB_PREFIX') . 'users';
-        DB::statement("ALTER TABLE {$table} comment 'The institution\'s users, including (not only) administrative and students'");
+        if (DB::connection()->getDriverName() != 'sqlite') {
+            $table = env('DB_PREFIX') . 'users';
+            DB::statement("ALTER TABLE {$table} comment 'The institution\'s users, including (not only) administrative and students'");
+        }
     }
 
     /**
