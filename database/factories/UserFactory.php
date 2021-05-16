@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
@@ -22,16 +23,12 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        //
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function unverified()
-    {
-        //
+        return [
+            'ra'       => $this->faker->unique()->numberBetween(1, 9999),
+            'name'     => $this->faker->name(),
+            'email'    => $this->faker->unique()->safeEmail(),
+            'password' => Hash::make('password'),
+            'role_id'  => Role::where('name', 'Student')->firstOrFail()->id,
+        ];
     }
 }

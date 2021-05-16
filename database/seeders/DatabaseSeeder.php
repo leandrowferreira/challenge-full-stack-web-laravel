@@ -13,6 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $this->call([
+            RolesTableSeeder::class
+        ]);
+
+        if (env('APP_ENV') == 'local') {
+            $this->call([
+                DevUsersTableSeeder::class
+            ]);
+        }
     }
 }
