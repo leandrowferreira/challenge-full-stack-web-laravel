@@ -25,10 +25,10 @@ O desafio consiste em criar uma aplicação para o cadastro de usuários conform
 Abaixo alguns mockoups de interface como um guia para a criação do front-end. Fique à vontade para usar sua criatividade e melhorias na criação do front-end.
 
 * Listagem de Alunos
-![Listagem de Alunos](/project-specification/mockups/studants_list.png)
+![Listagem de Alunos](/00_project-specification/mockups/studants_list.png)
 
 * Criar/Editar Aluno
-![Listagem de Alunos](/project-specification/mockups/studants_save.png)
+![Listagem de Alunos](/00_project-specification/mockups/studants_save.png)
 
 ## Histórias do Usuário
 - **Sendo** um usuário administrativo da Instituição
