@@ -115,6 +115,28 @@ class UserManagementTest extends TestCase
      * @test
      * @group users
      */
+    public function admin_can_show_user()
+    {
+        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail(), ['admin']);
+
+        $user = User::factory()->create()->makeHidden(['created_at', 'updated_at', 'deleted_at'])->toArray();
+
+        $this->assertDatabaseHas('users', $user);
+
+        $user = $this->json('get', $this->userEndpoint . $user['id'])
+            ->assertStatus(200)
+            ->getContent();
+
+        $user = json_decode($user, true);
+        unset($user['role']);
+
+        $this->assertDatabaseHas('users', $user);
+    }
+
+    /**
+     * @test
+     * @group users
+     */
     public function admin_can_update_user()
     {
         Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail(), ['admin']);
@@ -155,7 +177,7 @@ class UserManagementTest extends TestCase
      * @test
      * @group users
      */
-    public function cant_insert_incomplete_records()
+    public function cannot_insert_incomplete_records()
     {
         Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail(), ['admin']);
 
@@ -199,6 +221,22 @@ class UserManagementTest extends TestCase
             ->getContent();
 
         $this->assertDatabaseMissing('users', $data);
+    }
+
+    /**
+     * @test
+     * @group users
+     */
+    public function user_cannot_show_user()
+    {
+        Sanctum::actingAs(User::where('email', $this->studentEmail)->firstOrFail(), ['student']);
+
+        $user = User::factory()->create()->makeHidden(['created_at', 'updated_at', 'deleted_at'])->toArray();
+
+        $this->assertDatabaseHas('users', $user);
+
+        $user = $this->json('get', $this->userEndpoint . $user['id'])
+            ->assertStatus(403);
     }
 
     /**
