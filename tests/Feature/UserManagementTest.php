@@ -66,11 +66,6 @@ class UserManagementTest extends TestCase
     public function api_is_on()
     {
         $this->json('get', $this->endpoint)
-                ->assertStatus(401);
-
-        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail(), ['admin']);
-
-        $this->json('get', $this->endpoint)
                 ->assertStatus(200);
     }
 
