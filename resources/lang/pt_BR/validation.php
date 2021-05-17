@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Validation Language Lines
@@ -44,7 +43,7 @@ return [
     'exists'               => 'O campo :attribute selecionado é inválido.',
     'file'                 => 'O campo :attribute deve ser um arquivo.',
     'filled'               => 'O campo :attribute deve ter um valor.',
-    'gt' => [
+    'gt'                   => [
         'numeric' => 'O campo :attribute deve ser maior que :value.',
         'file'    => 'O campo :attribute deve ser maior que :value kilobytes.',
         'string'  => 'O campo :attribute deve ser maior que :value caracteres.',
@@ -64,7 +63,7 @@ return [
     'ipv4'                 => 'O campo :attribute deve ser um endereço IPv4 válido.',
     'ipv6'                 => 'O campo :attribute deve ser um endereço IPv6 válido.',
     'json'                 => 'O campo :attribute deve ser uma string JSON válida.',
-    'lt' => [
+    'lt'                   => [
         'numeric' => 'O campo :attribute deve ser menor que :value.',
         'file'    => 'O campo :attribute deve ser menor que :value kilobytes.',
         'string'  => 'O campo :attribute deve ser menor que :value caracteres.',
@@ -84,7 +83,7 @@ return [
     ],
     'mimes'                => 'O campo :attribute deve ser um arquivo do tipo: :values.',
     'mimetypes'            => 'O campo :attribute deve ser um arquivo do tipo: :values.',
-    'min' => [
+    'min'                  => [
         'numeric' => 'O campo :attribute deve ser pelo menos :min.',
         'file'    => 'O campo :attribute deve ter pelo menos :min kilobytes.',
         'string'  => 'O campo :attribute deve ter pelo menos :min caracteres.',
@@ -116,7 +115,9 @@ return [
     'unique'               => 'O campo :attribute já está sendo utilizado.',
     'uploaded'             => 'Ocorreu uma falha no upload do campo :attribute.',
     'url'                  => 'O campo :attribute tem um formato inválido.',
-    'uuid' => 'O campo :attribute deve ser um UUID válido.',
+    'uuid'                 => 'O campo :attribute deve ser um UUID válido.',
+
+    'cpf' => 'O campo :attribute não é um CPF válido.',
 
     /*
     |--------------------------------------------------------------------------
@@ -147,40 +148,39 @@ return [
     */
 
     'attributes' => [
-        'address'   => 'endereço',
-        'age'       => 'idade',
-        'body'      => 'conteúdo',
-        'cell'      => 'celular',
-        'city'      => 'cidade',
-        'country'   => 'país',
-        'date'      => 'data',
-        'day'       => 'dia',
-        'excerpt'   => 'resumo',
-        'first_name'=> 'primeiro nome',
-        'gender'    => 'gênero',
-        'hour'      => 'hora',
-        'last_name' => 'sobrenome',
-        'message'   => 'mensagem',
-        'minute'    => 'minuto',
-        'mobile'    => 'celular',
-        'month'     => 'mês',
-        'name'      => 'nome',
-        'neighborhood' => 'bairro',
-        'number'    => 'número',
-        'password'  => 'senha',
-        'phone'     => 'telefone',
-        'second'    => 'segundo',
-        'sex'       => 'sexo',
-        'state'     => 'estado',
-        'street'    => 'rua',
-        'subject'   => 'assunto',
-        'text'      => 'texto',
-        'time'      => 'hora',
-        'title'     => 'título',
-        'username'  => 'usuário',
-        'year'      => 'ano',
-        'description' => 'descrição',
+        'address'               => 'endereço',
+        'age'                   => 'idade',
+        'body'                  => 'conteúdo',
+        'cell'                  => 'celular',
+        'city'                  => 'cidade',
+        'country'               => 'país',
+        'date'                  => 'data',
+        'day'                   => 'dia',
+        'excerpt'               => 'resumo',
+        'first_name'            => 'primeiro nome',
+        'gender'                => 'gênero',
+        'hour'                  => 'hora',
+        'last_name'             => 'sobrenome',
+        'message'               => 'mensagem',
+        'minute'                => 'minuto',
+        'mobile'                => 'celular',
+        'month'                 => 'mês',
+        'name'                  => 'nome',
+        'neighborhood'          => 'bairro',
+        'number'                => 'número',
+        'password'              => 'senha',
+        'phone'                 => 'telefone',
+        'second'                => 'segundo',
+        'sex'                   => 'sexo',
+        'state'                 => 'estado',
+        'street'                => 'rua',
+        'subject'               => 'assunto',
+        'text'                  => 'texto',
+        'time'                  => 'hora',
+        'title'                 => 'título',
+        'username'              => 'usuário',
+        'year'                  => 'ano',
+        'description'           => 'descrição',
         'password_confirmation' => 'confirmação da senha',
     ],
-
 ];
