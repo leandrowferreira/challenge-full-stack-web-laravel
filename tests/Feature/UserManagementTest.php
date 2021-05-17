@@ -2,11 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Http\Resources\UserResource;
 use Tests\TestCase;
-use App\Models\Role;
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
-use Illuminate\Support\Facades\Hash;
 use Database\Seeders\RolesTableSeeder;
 use Database\Seeders\DevUsersTableSeeder;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -48,12 +47,29 @@ class UserManagementTest extends TestCase
     }
 
     /**
+     * When tests need some fake data, they'll get here
+     */
+    protected function getFakeData()
+    {
+        return [
+            'ra'    => $this->faker->unique()->numberBetween(1, 9999),
+            'cpf'   => $this->faker->unique()->cpf(false),
+            'name'  => $this->faker->unique()->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+        ];
+    }
+
+    /**
      * @test
      * @group users
      */
-    public function api_is_responding()
+    public function api_is_on()
     {
-        //We expect that root endpoint returns "HTTP 200"
+        $this->json('get', $this->endpoint)
+                ->assertStatus(401);
+
+        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail(), ['admin']);
+
         $this->json('get', $this->endpoint)
                 ->assertStatus(200);
     }
@@ -62,16 +78,35 @@ class UserManagementTest extends TestCase
      * @test
      * @group users
      */
+    public function admin_can_list_users()
+    {
+        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail(), ['admin']);
+
+        $data = $this->json('get', $this->userEndpoint)
+            ->assertStatus(200)
+            ->getContent();
+
+        foreach (json_decode($data, true)['data'] as $user) {
+            unset($user['role']);
+            $this->assertDatabaseHas('users', $user);
+        }
+    }
+
+    /**
+     * @test
+     * @group users
+     */
     public function admin_can_create_user()
     {
-        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail());
+        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail(), ['admin']);
 
-        $data = User::factory()->make();
+        $data = $this->getFakeData();
 
-        $user = $this->json('post', $this->userEndpoint, $data)
-                ->assertStatus(201)
-                ->getContent();
-        $data['id'] = (string) json_decode($user, true)['id'];
+        $this->assertDatabaseMissing('users', $data);
+
+        $this->json('post', $this->userEndpoint, $data)
+            ->assertStatus(201)
+            ->getContent();
 
         $this->assertDatabaseHas('users', $data);
     }
@@ -82,13 +117,15 @@ class UserManagementTest extends TestCase
      */
     public function admin_can_update_user()
     {
-        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail());
+        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail(), ['admin']);
 
         $data = [
             'name' => $this->faker->unique()->name(),
         ];
 
         $user = User::factory()->create();
+
+        $this->assertDatabaseMissing('users', $data);
 
         $this->json('put', $this->userEndpoint . $user->id, $data)
             ->assertStatus(200);
@@ -102,14 +139,16 @@ class UserManagementTest extends TestCase
      */
     public function admin_can_delete_user()
     {
-        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail());
+        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail(), ['admin']);
 
-        $user = User::factory()->create();
+        $user = User::factory()->create()->makeHidden(['created_at', 'updated_at', 'deleted_at'])->toArray();
 
-        $this->json('delete', $this->userEndpoint . $user->id)
+        $this->assertDatabaseHas('users', $user);
+
+        $this->json('delete', $this->userEndpoint . $user['id'])
             ->assertStatus(204);
 
-        $this->assertDatabaseMissing('users', $user->toArray());
+        $this->assertDatabaseMissing('users', $user);
     }
 
     /**
@@ -118,16 +157,29 @@ class UserManagementTest extends TestCase
      */
     public function cant_insert_incomplete_records()
     {
-        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail());
+        Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail(), ['admin']);
 
-        $data = [
-            'name' => 'whatever, the input is incomplete...',
-        ];
+        foreach (['ra', 'cpf', 'name', 'email'] as $field) {
+            $data = $this->getFakeData();
+            unset($data[$field]);
 
-        $this->json('post', $this->userEndpoint, $data)
-            ->assertStatus(422);
+            $this->json('post', $this->userEndpoint, $data)
+                ->assertStatus(422);
 
-        $this->assertDatabaseMissing('users', $data);
+            $this->assertDatabaseMissing('users', $data);
+        }
+    }
+
+    /**
+     * @test
+     * @group users
+     */
+    public function user_cannot_list_users()
+    {
+        Sanctum::actingAs(User::where('email', $this->studentEmail)->firstOrFail(), ['student']);
+
+        $this->json('get', $this->userEndpoint)
+            ->assertStatus(403);
     }
 
     /**
@@ -136,12 +188,15 @@ class UserManagementTest extends TestCase
      */
     public function user_cannot_create_user()
     {
-        Sanctum::actingAs(User::where('email', $this->studentEmail)->firstOrFail());
+        Sanctum::actingAs(User::where('email', $this->studentEmail)->firstOrFail(), ['student']);
 
-        $data = User::factory()->make();
+        $data = $this->getFakeData();
+
+        $this->assertDatabaseMissing('users', $data);
 
         $this->json('post', $this->userEndpoint, $data)
-            ->assertStatus(403);
+            ->assertStatus(403)
+            ->getContent();
 
         $this->assertDatabaseMissing('users', $data);
     }
@@ -152,13 +207,15 @@ class UserManagementTest extends TestCase
      */
     public function user_cannot_update_user()
     {
-        Sanctum::actingAs(User::where('email', $this->studentEmail)->firstOrFail());
+        Sanctum::actingAs(User::where('email', $this->studentEmail)->firstOrFail(), ['student']);
 
         $data = [
             'name' => $this->faker->unique()->name(),
         ];
 
         $user = User::factory()->create();
+
+        $this->assertDatabaseMissing('users', $data);
 
         $this->json('put', $this->userEndpoint . $user->id, $data)
             ->assertStatus(403);
@@ -172,13 +229,15 @@ class UserManagementTest extends TestCase
      */
     public function user_cannot_delete_user()
     {
-        Sanctum::actingAs(User::where('email', $this->studentEmail)->firstOrFail());
+        Sanctum::actingAs(User::where('email', $this->studentEmail)->firstOrFail(), ['student']);
 
-        $user = User::factory()->create();
+        $user = User::factory()->create()->makeHidden(['created_at', 'updated_at', 'deleted_at'])->toArray();
 
-        $this->json('delete', $this->userEndpoint . $user->id)
+        $this->assertDatabaseHas('users', $user);
+
+        $this->json('delete', $this->userEndpoint . $user['id'])
             ->assertStatus(403);
 
-        $this->assertDatabaseHas('users', $user->toArray());
+        $this->assertDatabaseHas('users', $user);
     }
 }
