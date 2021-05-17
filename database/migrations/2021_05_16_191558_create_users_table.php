@@ -36,11 +36,13 @@ class CreateUsersTable extends Migration
                 ->comment("User's e-mail");
 
             $table->string('password')
+                ->nullable()
                 ->comment('Hashed password');
 
             $table->foreignId('role_id')
                 ->nullable()
-                ->comment("The user's role in the company, that can be 'lazy assigned'. For sake of simplicity, only one rule per user");
+                ->default(3)
+                ->comment("The user's role in the company, that is 'Student' by default. For sake of simplicity, only one rule per user");
 
             //Creation, update and delete timestamps
             $table->timestamps();
