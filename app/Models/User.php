@@ -22,5 +22,10 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['ra', 'name', 'email', 'password', 'role_id'];
+    protected $fillable = ['ra', 'cpf', 'name', 'email', 'password', 'role_id'];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }
