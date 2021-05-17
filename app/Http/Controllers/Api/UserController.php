@@ -12,16 +12,20 @@ use Illuminate\Validation\ValidationException;
 class UserController extends Controller
 {
     /**
+     * This is a resource that can be used only by admin role
+     */
+    public function __construct()
+    {
+        $this->middleware('administrator');
+    }
+
+    /**
      * Display a listing of the user.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        if (!$request->user()->tokenCan('admin')) {
-            return response('', 403);
-        }
-
         return UserResource::collection(User::all());
     }
 
@@ -33,10 +37,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$request->user()->tokenCan('admin')) {
-            return response('', 403);
-        }
-
         try {
             $data = $request->validate([
                 'ra'       => ['required', 'unique:users'],
@@ -59,9 +59,13 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Request $request, User $user)
     {
-        //
+        if ($user) {
+            return response(json_encode(new UserResource($user)), 200);
+        } else {
+            return response('', 404);
+        }
     }
 
     /**
@@ -73,10 +77,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if (!$request->user()->tokenCan('admin')) {
-            return response('', 403);
-        }
-
         try {
             $data = $request->validate([
                 'cpf'      => ['unique:users', new Cpf],
@@ -100,16 +100,12 @@ class UserController extends Controller
      */
     public function destroy(Request $request, User $user)
     {
-        if (!$request->user()->tokenCan('admin')) {
-            return response('', 403);
-        }
-
         if ($user) {
             $user->delete();
 
             return response('', 204);
         } else {
-            return response('resource not found', 404);
+            return response('', 404);
         }
     }
 }
