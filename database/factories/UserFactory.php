@@ -25,6 +25,7 @@ class UserFactory extends Factory
     {
         return [
             'ra'       => $this->faker->unique()->numberBetween(1, 9999),
+            'cpf'      => $this->faker->unique()->cpf(false),
             'name'     => $this->faker->name(),
             'email'    => $this->faker->unique()->safeEmail(),
             'password' => Hash::make('password'),

@@ -19,7 +19,7 @@ class UserManagementTest extends TestCase
     protected $endpoint;
     protected $userEndpoint;
     protected $adminEmail;
-    protected $userEmail;
+    protected $studentEmail;
 
     /**
      * Set some variables before startup tests.
@@ -31,7 +31,7 @@ class UserManagementTest extends TestCase
         $this->endpoint     = 'api/v' . env('API_VERSION') . '/';
         $this->userEndpoint = 'api/v' . env('API_VERSION') . '/users/';
         $this->adminEmail   = 'admin@edtech.tmp.br';
-        $this->userEmail    = 'user@edtech.tmp.br';
+        $this->studentEmail = 'student@edtech.tmp.br';
     }
 
     /**
@@ -45,21 +45,6 @@ class UserManagementTest extends TestCase
             RolesTableSeeder::class,
             DevUsersTableSeeder::class
         ]);
-    }
-
-    /**
-     * When tests need some fake data, they'll get here
-     */
-    protected function getFakeData()
-    {
-        return [
-            'id'         => null,
-            'ra'         => $this->faker->unique()->numberBetween(1, 9999),
-            'name'       => $this->faker->unique()->name(),
-            'email'      => $this->faker->unique()->safeEmail(),
-            'password'   => Hash::make('password'),
-            'role_id'    => Role::where('name', 'Student')->firstOrFail()->id,
-        ];
     }
 
     /**
@@ -81,7 +66,7 @@ class UserManagementTest extends TestCase
     {
         Sanctum::actingAs(User::where('email', $this->adminEmail)->firstOrFail());
 
-        $data = $this->getFakeData();
+        $data = User::factory()->make();
 
         $user = $this->json('post', $this->userEndpoint, $data)
                 ->assertStatus(201)
@@ -151,9 +136,9 @@ class UserManagementTest extends TestCase
      */
     public function user_cannot_create_user()
     {
-        Sanctum::actingAs(User::where('email', $this->userEmail)->firstOrFail());
+        Sanctum::actingAs(User::where('email', $this->studentEmail)->firstOrFail());
 
-        $data = $this->getFakeData();
+        $data = User::factory()->make();
 
         $this->json('post', $this->userEndpoint, $data)
             ->assertStatus(403);
@@ -167,7 +152,7 @@ class UserManagementTest extends TestCase
      */
     public function user_cannot_update_user()
     {
-        Sanctum::actingAs(User::where('email', $this->userEmail)->firstOrFail());
+        Sanctum::actingAs(User::where('email', $this->studentEmail)->firstOrFail());
 
         $data = [
             'name' => $this->faker->unique()->name(),
@@ -187,7 +172,7 @@ class UserManagementTest extends TestCase
      */
     public function user_cannot_delete_user()
     {
-        Sanctum::actingAs(User::where('email', $this->userEmail)->firstOrFail());
+        Sanctum::actingAs(User::where('email', $this->studentEmail)->firstOrFail());
 
         $user = User::factory()->create();
 

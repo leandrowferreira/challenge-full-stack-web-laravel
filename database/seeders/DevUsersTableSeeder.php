@@ -19,10 +19,21 @@ class DevUsersTableSeeder extends Seeder
         //One admin
         User::create([
             'ra'       => null,
+            'cpf'      => '11111111111',
             'name'     => 'Administrator',
             'email'    => 'admin@edtech.tmp.br',
             'password' => Hash::make('password'),
             'role_id'  => Role::where('name', 'Admin')->firstOrFail()->id,
+        ]);
+
+        //One specific student (for testing purpouse)
+        User::create([
+            'ra'       => 1,
+            'cpf'      => '22222222222',
+            'name'     => 'Common user',
+            'email'    => 'student@edtech.tmp.br',
+            'password' => Hash::make('password'),
+            'role_id'  => Role::where('name', 'Student')->firstOrFail()->id,
         ]);
 
         //A lot of students

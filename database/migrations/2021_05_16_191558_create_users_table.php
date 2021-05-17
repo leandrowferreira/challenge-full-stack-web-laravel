@@ -23,6 +23,11 @@ class CreateUsersTable extends Migration
                 ->nullable()
                 ->comment("Acronym to student's Academic Record Number [Registro Acadêmico]");
 
+            $table->string('cpf', 11)
+                ->unique()
+                ->nullable()
+                ->comment('Brazilian document, unique for every person');
+
             $table->string('name')
                 ->comment("User's name");
 
