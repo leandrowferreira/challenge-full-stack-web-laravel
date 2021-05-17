@@ -25,6 +25,7 @@ class DevUsersTableSeeder extends Seeder
             'password' => Hash::make('password'),
             'role_id'  => Role::where('name', 'Admin')->firstOrFail()->id,
         ]);
+
         //One specific student (for testing purpouse)
         User::create([
             'ra'       => 1,
