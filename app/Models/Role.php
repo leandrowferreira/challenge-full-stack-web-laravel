@@ -9,6 +9,11 @@ class Role extends Model
 {
     use HasFactory;
 
+    // The IDs for basic roles
+    const ID_ADMIN   = 1;
+    const ID_TEACHER = 2;
+    const ID_STUDENT = 3;
+
     /**
      * The table associated with the model.
      *

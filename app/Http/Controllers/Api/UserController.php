@@ -26,6 +26,15 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        //Check if the request requires role filtering
+        $role = trim($request->query('role'));
+        if ($role) {
+            if (array_search($role, ['students', 'admins', 'teachers']) !== false) {
+                return UserResource::collection(User::$role()->get());
+            }
+        }
+
+        //Return all users
         return UserResource::collection(User::all());
     }
 
