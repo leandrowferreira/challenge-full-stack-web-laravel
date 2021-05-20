@@ -99,7 +99,7 @@ class UserController extends Controller
             //Apply validation rules before update
             $data = $request->validate([
                 'name'     => ['string', 'min:3', 'max:200'],
-                'email'    => ['unique:users', 'email'],
+                'email'    => ['email', 'unique:users,email,' . $user->id],
             ]);
         } catch (ValidationException $e) {
             //422: Unprocessable Entity
