@@ -17,7 +17,8 @@ class Administrator
     public function handle(Request $request, Closure $next)
     {
         if (!$request->user()->tokenCan('admin')) {
-            return response('', 403);
+            //403: Forbidden
+            return response()->json(['message' => 'The client does not have access rights'], 403);
         }
 
         return $next($request);
