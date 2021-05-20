@@ -22,6 +22,7 @@ class UserController extends Controller
     /**
      * Display a listing of the user.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -97,7 +98,6 @@ class UserController extends Controller
         try {
             //Apply validation rules before update
             $data = $request->validate([
-                'cpf'      => ['unique:users', new Cpf],
                 'name'     => ['string', 'min:3', 'max:200'],
                 'email'    => ['unique:users', 'email'],
             ]);
