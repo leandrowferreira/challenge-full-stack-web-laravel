@@ -165,7 +165,7 @@ class UserManagementTest extends TestCase
         $this->json('delete', $this->userEndpoint . $user['id'])
             ->assertStatus(204);
 
-        $this->assertDatabaseMissing('users', $user);
+        $this->assertSoftDeleted('users', $user);
     }
 
     /**
