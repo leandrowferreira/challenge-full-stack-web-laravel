@@ -28,6 +28,7 @@ class UserController extends Controller
     {
         //Check if the request requires role filtering
         if ($role = trim($request->query('role'))) {
+            //Apply the required scope (if exists)
             if (array_search($role, ['students', 'admins', 'teachers']) !== false) {
                 //200: OK
                 return UserResource::collection(User::$role()->get());
@@ -60,6 +61,7 @@ class UserController extends Controller
             return response($e->errors(), 422);
         }
 
+        //Create user by mass asignment
         $user = User::create($data);
 
         //201: Created
@@ -93,18 +95,21 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         try {
+            //Apply validation rules before update
             $data = $request->validate([
                 'cpf'      => ['unique:users', new Cpf],
-                'email'    => ['unique:users', 'email'],
                 'name'     => ['string', 'min:3', 'max:200'],
+                'email'    => ['unique:users', 'email'],
             ]);
         } catch (ValidationException $e) {
             //422: Unprocessable Entity
             return response($e->errors(), 422);
         }
 
+        //Update user by mass asignment
         $user->update($data);
 
+        //Return the new version of this resource
         //200: OK
         return response(json_encode(new UserResource($user)), 200);
     }
@@ -117,7 +122,9 @@ class UserController extends Controller
      */
     public function destroy(Request $request, User $user)
     {
+        //Check whether user exists...
         if ($user) {
+            //...and if so, delete it
             $user->delete();
 
             //204: No Content
