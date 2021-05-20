@@ -12,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 class UserController extends Controller
 {
     /**
-     * This is a resource that can be used only by admin role
+     * This resource that can be used only by admin role.
      */
     public function __construct()
     {
@@ -27,14 +27,15 @@ class UserController extends Controller
     public function index(Request $request)
     {
         //Check if the request requires role filtering
-        $role = trim($request->query('role'));
-        if ($role) {
+        if ($role = trim($request->query('role'))) {
             if (array_search($role, ['students', 'admins', 'teachers']) !== false) {
+                //200: OK
                 return UserResource::collection(User::$role()->get());
             }
         }
 
         //Return all users
+        //200: OK
         return UserResource::collection(User::all());
     }
 
@@ -47,18 +48,21 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
+            //Apply validation rules before store
             $data = $request->validate([
                 'ra'       => ['required', 'unique:users'],
                 'cpf'      => ['required', 'unique:users', new Cpf],
-                'email'    => ['required', 'unique:users', 'email'],
-                'name'     => ['required', 'string', 'min:3', 'max:200'],
+                'name'     => ['required', 'string', 'min:10', 'max:200'],
+                'email'    => ['required', 'unique:users', 'email', 'max:200'],
             ]);
         } catch (ValidationException $e) {
+            //422: Unprocessable Entity
             return response($e->errors(), 422);
         }
 
         $user = User::create($data);
 
+        //201: Created
         return response(json_encode(new UserResource($user)), 201);
     }
 
@@ -68,11 +72,13 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, User $user)
+    public function show(User $user)
     {
         if ($user) {
+            //200: OK
             return response(json_encode(new UserResource($user)), 200);
         } else {
+            //404: Not Found
             return response('', 404);
         }
     }
@@ -93,11 +99,13 @@ class UserController extends Controller
                 'name'     => ['string', 'min:3', 'max:200'],
             ]);
         } catch (ValidationException $e) {
+            //422: Unprocessable Entity
             return response($e->errors(), 422);
         }
 
         $user->update($data);
 
+        //200: OK
         return response(json_encode(new UserResource($user)), 200);
     }
 
@@ -112,8 +120,10 @@ class UserController extends Controller
         if ($user) {
             $user->delete();
 
+            //204: No Content
             return response('', 204);
         } else {
+            //404: Not Found
             return response('', 404);
         }
     }
