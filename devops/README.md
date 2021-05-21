@@ -163,7 +163,7 @@ Insert the basic `.env` content to make this site funcional:
 
 ```
 APP_NAME="EdTech"
-APP_ENV=development
+APP_ENV=local
 APP_KEY=base64:Tm6EKfGUVoVNFiELB8aUbk8Y8SwG9S3uWz4vGw4RjJ8=
 APP_DEBUG=false
 APP_URL=https://edtech.tmp.br
