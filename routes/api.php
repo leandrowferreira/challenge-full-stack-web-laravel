@@ -14,7 +14,7 @@ use App\Http\Controllers\Api\AuthController;
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::get('auth/me', [AuthController::class, 'me'])->name('auth.me')->middleware('auth:sanctum');
 
-    //Notice that sanctum "guard" is active for home and every CRUD method
+    //Notice that sanctum "guard" is active every CRUD method
     Route::middleware(['auth:sanctum'])->group(function () {
         //The complete "cruddy-kit" for APIs
         Route::resource('users', UserController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
