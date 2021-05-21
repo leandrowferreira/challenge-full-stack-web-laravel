@@ -2,9 +2,9 @@
 
 The backend was developed in `Laravel` and `PHP`. So, to work well, it needs a web server. This document describes how to start from fresh Ubuntu Focal Fossa (20.04) installation to get a funcional web server to application.
 
-This document is tested in an EC2 AWS instance, using built in `ubuntu` user. If you use this instructions in another environment, maybe you need to make some changes.
+This document is tested in an EC2 AWS instance, using built in `ubuntu` user. If you plan to use this instructions in another environment, maybe you need to make some changes.
 
-*Important notice!* This instructions may heve security issues, in special case of MYSql. Remember that these informations are for staging environment only and not applicable to final production environment.
+**Important notice!** This instructions may contains security issues, in special case of MySQL. Remember that these informations are for **staging environment** only and not applicable to final production environment.
 
 
 ## Table of Contents
@@ -17,8 +17,8 @@ This document is tested in an EC2 AWS instance, using built in `ubuntu` user. If
   - [File size settings](#file-size-settings)
   - [Enable Apache *rewrite* module](#enable-apache-rewrite-module)
   - [Make application tree](#make-application-tree)
-  - [Configure the new site in Apache](#configure-new-site-in-apache)
-  - [MYSql user adjustments](#mysql-user-adjustments)
+  - [Configure the new site in Apache](#configure-the-new-site-in-apache)
+  - [MySQL user adjustments](#mysql-user-adjustments)
   - [Clone repository](#clone-repository)
   - [Create env file](#create-env-file)
   - [Install dependencies](#install-dependencies)
@@ -38,14 +38,14 @@ sudo apt update && sudo apt upgrade -y
 ## Basic config for a simple Apache Web Server and PHP
 
 ```bash
-sudo apt install -y php curl libaio-dev supervisor build-essential gcc make perl dkms python3-distutils git poppler-utils nodejs libapache2-mod-php php-mysql php-cli php-gd php-imagick php-mbstring php-zip php-curl php-xml php-dev php-pear php-tokenizer php-json zip imagemagick && sudo apt autoremove
+sudo apt install -y php curl libaio-dev supervisor build-essential gcc make perl dkms python3-distutils git poppler-utils nodejs libapache2-mod-php php-MySQL php-cli php-gd php-imagick php-mbstring php-zip php-curl php-xml php-dev php-pear php-tokenizer php-json zip imagemagick && sudo apt autoremove
 ```
 
 
 ## Basic install to MySQL Server
 
 ```bash
-sudo apt install -y mysql-server
+sudo apt install -y MySQL-server
 ```
 
 
@@ -129,16 +129,16 @@ sudo a2ensite edtech.tmp.br
 ```
 
 
-## MYSql user adjustments
+## MySQL user adjustments
 
 ```bash
-sudo mysql
+sudo MySQL
 ```
 
-The following commands will use the MYSql console
+The following commands will use the MySQL console
 
 ```sql
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'my-password';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH MySQL_native_password BY 'my-password';
 CREATE SCHEMA `edtech.tmp.br` DEFAULT CHARACTER SET utf;
 ```
 
@@ -163,7 +163,7 @@ Insert the basic `.env` content to make this site funcional:
 
 ```
 APP_NAME="EdTech"
-APP_ENV=production
+APP_ENV=development
 APP_KEY=base64:Tm6EKfGUVoVNFiELB8aUbk8Y8SwG9S3uWz4vGw4RjJ8=
 APP_DEBUG=false
 APP_URL=https://edtech.tmp.br
@@ -173,7 +173,7 @@ API_VERSION=1
 LOG_CHANNEL=daily
 LOG_LEVEL=debug
 
-DB_CONNECTION=mysql
+DB_CONNECTION=MySQL
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=edtech.tmp.br
@@ -205,7 +205,7 @@ sudo chmod 777 storage bootstrap/cache -R
 ```bash
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
-sudo certbot certonly --apache
+sudo certbot --apache
 ```
 
 
