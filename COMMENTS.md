@@ -4,19 +4,21 @@ Here you can read notes about architecture, third part software and other import
 
 ## Table of Contents
 
-  - [Architecture](architecture)
+  - [Architecture](#architecture)
   - [Third party software](#third-party-software)
-  - [What to do with more time](what-to-do-with-more-time)
-  - [What required items was not delivered](what-required-items-was-not-delivered)
+  - [What to do with more time](#what-to-do-with-more-time)
+  - [What required items was not delivered](#what-required-items-was-not-delivered)
 
 
 ## Architecture
 
-Laravel provides an ideal framework to develop APIs, since it delivers a complete toolbox to manage requests, routing and authentication. Besides, using it always forces de developer to follow best dev paradigms, like restful *APIs* and *SOLID* concepts. The MVC architecture was applied, where the "degraded" *View layer* is performed by `json` responses to the client.
+Laravel provides an ideal framework to develop APIs, since it delivers a complete toolbox to manage requests, routing and authentication. Besides, using it always forces the developer to follow best dev paradigms, like restful *APIs* and *SOLID* concepts. The MVC architecture was applied, where the "degradated" *View layer* is performed by `json` responses to the client.
 
-At the backend, the default Laravel configuration was used to manage resource routes and so stripping out unnecessary code from the project. Various frameworks resources was used
+At the backend, the default Laravel configuration was used to manage resource routes and so stripping out unnecessary code from the project. Various frameworks resources was used, like [resource routing](https://laravel.com/docs/8.x/controllers#resource-controllers), [middleware](https://laravel.com/docs/8.x/middleware), [custom validation rules](https://laravel.com/docs/8.x/validation#custom-validation-rules), [API resources](https://laravel.com/docs/8.x/eloquent-resources), [model scopes](https://laravel.com/docs/8.x/eloquent#local-scopes) and [Sanctum authentication](https://laravel.com/docs/8.x/sanctum).
 
-MySQL database is a project request but Laravel supports out-of-the-box several database managers, such as SQLite, PostgreSQL and MSSQL, additionalli, other *DBMS* could be implemented, using third party soluctions, such as Oracle.
+MySQL database is a project request but Laravel supports out-of-the-box several database managers, such as SQLite, PostgreSQL and MSSQL, additionally, other *DBMS*, such as Oracle, could be implemented, using third party soluctions.
+
+It's *very important* to register the use of same model (User) to store admin and students. This approach makes sense because the whole project is an academic management solution. So, regardless the profile, all "actors" are system users and their access and rights varies according to their roles.
 
 ## Third party software
 
@@ -32,14 +34,14 @@ Although, it's valid to cite some software and libraries that played important r
 
 Programming is the art of always refactoring. There's an extensive list of features that could be implemented or enhanced, but just to cite the most important ones:
 
-  - Log all data changes through *API*
-  - Add localization in front and backend
-  - Create Postman library to make easy to implement solutions that consumes *API*
-  - Enable Sawgger to the *API*
-  - Implement Websockets to guarantee frontend sync
-  - Enable cookie-based session authentication to SPA frontend access
-  - Token rotation for every *API* call
-  - Implement complete Auth interface to better user management
+  - Log all data changes through *API*.
+  - Add localization in front and backend.
+  - Create Postman library to make easier to implement solutions that consumes *API*.
+  - Enable Sawgger to *API*.
+  - Implement Websockets to guarantee frontend syncing.
+  - Enable cookie-based session authentication to SPA frontend access.
+  - Token rotation for every *API* call.
+  - Complete Auth interface to better user management, including admin,teachers ant other roles.
 
 ## What required items was not delivered
 

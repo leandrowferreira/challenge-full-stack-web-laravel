@@ -1,25 +1,26 @@
 # Full Stack Web Developer - Final Submission
-===================
 
 Sample CRUD API and frontend implementation as candidate submission to fullstak web developer position at GrupoA.
 
 ## Table of Contents
 
   - [Challenge](#challenge)
-  - [Live sample](#live-saple)
+  - [Live sample](#live-sample)
   - [Features](#features)
   - [Modules](#modules)
+    - [API](#API)
+    - [Frontend](#Frontend)
   - [Installing](#installing)
-    - [System requirements](#system-requeriments)
+    - [System requirements](#system-requirements)
     - [Installing API](#installing-api)
     - [.env sample](#.env-sample)
     - [Seeding database](#seeding-database)
-    - [Testing](testing)
-    - [Development server](development-server)
-    - [Production environment considerations](production-environment-considerations)
+    - [Testing](#testing)
+    - [Development server](#development-server)
+    - [Production environment considerations](#production-environment-considerations)
   - [API documentation](#api-documentation)
     - [Authentication](#authentication)
-    - [Entry points](#antry-points)
+    - [Entry points](#entry-points)
     - [Further information](#further-information)
   - [Comments](#comments)
   - [Resources](#resources)
@@ -35,7 +36,7 @@ A challenge is proposed to measure applicant's technical knowledgement. The deta
 
 A live sample endpoint is online and can be reached at [https://edtech.tmp.br/api/v1](https://edtech.tmp.br/api/v1).
 
-This sample is hosted using AWS EC2 instante, behind Cloudflare, implementing complete encryption (Client <-> Cloudflare <-> AWS, with Let's encrypt SSL Certificate in the last point.
+This sample is hosted using AWS EC2 instance, behind Cloudflare, implementing complete encryption (Client <-> Cloudflare <-> AWS), with Let's encrypt SSL Certificate in the last point.
 
 The Frontend ([stored in another repository](https://github.com/leandrowferreira/challenge-full-stack-web-laravel-frontend)) is hosted as static site using AWS S3, with domain name translated by Cloudflare.
 
@@ -61,7 +62,7 @@ As requested, the submission is a combination of two distinct modules, that uses
 
 ### Frontend
 
-- Frontend to consume *API*, stored in [another repository](https://github.com/leandrowferreira/challenge-full-stack-web-laravel).
+- Frontend to consume *API*, stored in [another repository](https://github.com/leandrowferreira/challenge-full-stack-web-laravel-frontend).
 - Written in `Javascript` and `Vuetify`.
 - Single Page Application (*SPA*) that consumes all *API* entry points
 
@@ -70,7 +71,7 @@ As requested, the submission is a combination of two distinct modules, that uses
 
 Once the system requeriments is fulfilled, the instalation is a simple step-by-step, as described below.
 
-### System requeriments
+### System requirements
 
 The *API* is fine-tuned to work in a Linux setup that attends all Laravel requirements, using any web server (e.g. Apache). A comprehensive step-by-step system installation from a fresh *Ubuntu Focal Fossa* installation [is described here](/devops/README.md).
 
