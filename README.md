@@ -5,6 +5,7 @@ Sample CRUD API and frontend implementation as candidate submission to fullstak 
 ## Table of Contents
 
   - [Challenge](#challenge)
+  - [Live sample](#live-sample)
   - [Features](#features)
   - [Modules](#modules)
     - [API](#API)
@@ -30,7 +31,15 @@ Sample CRUD API and frontend implementation as candidate submission to fullstak 
 
 A challenge is proposed to measure applicant's technical knowledgement. The detailed requeriments are [described here](/00_project-specification/README.md).
 
-This is the project's Backend portion. The Frontend  is [stored in another repository](https://github.com/leandrowferreira/challenge-full-stack-web-laravel-frontend).
+
+## Live sample
+
+A live sample endpoint is online and can be reached at [https://edtech.tmp.br/api/v1](https://edtech.tmp.br/api/v1).
+
+This sample is hosted using AWS EC2 instance, behind Cloudflare, implementing complete encryption (Client <-> Cloudflare <-> AWS), with Let's encrypt SSL Certificate in the last point.
+
+The Frontend ([stored in another repository](https://github.com/leandrowferreira/challenge-full-stack-web-laravel-frontend)) is hosted as static site using AWS S3, with domain name translated by Cloudflare.
+
 
 ## Features
 
